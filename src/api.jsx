@@ -7,14 +7,29 @@ export async function getData() {
 }
 export async function deleteData(id) {
     return await axios.delete(`${url}/${id}`)
-
 }
+
 export async function postData(data) {
-    return await axios.post(url, data, {
-        headers: {
-            'Content-type': 'application/json'
-        }
-    }
+    const response = await getData(); // Fetch existing products
+    const products = response.data;
 
-    )
+    let newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1; // Get next ID
+
+    let newData = {
+        id: newId,
+        ...data
+    };
+
+    return await axios.post(url, newData, {
+        headers: { 'Content-Type': 'application/json' }
+    });
 }
+
+export async function putData(id, data) {
+    return await axios.put(`${url}/${id}`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
+
