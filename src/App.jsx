@@ -37,11 +37,11 @@ const App = () => {
 
   }
   let deleteProduct = async (id) => {
-    const response = await deleteData(id);
-    console.log(response); // Check if it returns success
+    console.log(id)
+    await deleteData(id);
+
     setProducts(products.filter(p => p.id !== id));
   };
-
 
 
   function editProduct(value) {
